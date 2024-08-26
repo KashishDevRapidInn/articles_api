@@ -1,11 +1,12 @@
 use actix_web::{web, App, HttpServer};
 mod db_utils;
 mod db_models;
-mod services;
+mod routes;
 pub mod schema;
 
 use db_utils::establish_connection;
-use services::{test_connection, fetch_users, create_user,create_article,fetch_articles};
+use routes::user::{test_connection, fetch_users, create_user, update_user, delete_user};
+use routes::article::{create_article, fetch_articles, update_article, delete_article};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -18,6 +19,10 @@ async fn main() -> std::io::Result<()> {
             .service(create_user)
             .service(create_article)
             .service(fetch_articles)
+            .service(update_user)
+            .service(delete_user)
+            .service(update_article)
+            .service(delete_article)
             // .service(fetch_user_articles)
             // .service(create_user_article)
     })
